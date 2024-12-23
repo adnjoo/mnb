@@ -4,8 +4,8 @@ const puppeteer = require("puppeteer");
 const app = express();
 app.use(express.json());
 
-app.get("/screenshot", async (req, res) => {
-    const { url } = req.query;
+app.post("/screenshot", async (req, res) => {
+    const { url } = req.body;
 
     if (!url) {
         return res.status(400).send({ error: "URL is required" });
