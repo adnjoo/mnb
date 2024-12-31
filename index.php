@@ -34,21 +34,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Puppeteer Screenshot</title>
 </head>
 <body>
-    <h1>Website Screenshot Generator (Puppeteer)</h1>
-    <form method="post">
-        <label for="url">Enter a URL:</label>
-        <input type="text" name="url" id="url" required>
-        <button type="submit">Generate Screenshot</button>
-    </form>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Website Screenshot Generator</h1>
+        <form method="post" class="mb-4">
+            <div class="mb-3">
+                <label for="url" class="form-label">Enter a URL:</label>
+                <input type="text" name="url" id="url" class="form-control" placeholder="https://example.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Generate Screenshot</button>
+        </form>
 
-    <?php if (isset($screenshotBase64)): ?>
-        <h2>Screenshot</h2>
-        <img src="<?php echo $screenshotBase64; ?>" alt="Website Screenshot" style="max-width: 100%;">
-    <?php elseif (isset($error)): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
+        <?php if (isset($screenshotBase64)): ?>
+            <div class="alert alert-success" role="alert">
+                Screenshot generated successfully!
+            </div>
+            <h2 class="text-center">Screenshot</h2>
+            <div class="text-center">
+                <img src="<?php echo $screenshotBase64; ?>" alt="Website Screenshot" class="img-fluid mt-3">
+            </div>
+        <?php elseif (isset($error)): ?>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $error; ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+3oQb1DkzP3Dzo5JHXd7xNN2Brg2e" crossorigin="anonymous"></script>
 </body>
 </html>
