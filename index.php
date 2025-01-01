@@ -3,8 +3,12 @@ require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $url = $_POST['url'];
+$screenshotBase64 = null;
+$error = null;
+
+// Check if a query parameter 'q' exists
+if (isset($_GET['q'])) {
+    $url = $_GET['q'];
 
     if (filter_var($url, FILTER_VALIDATE_URL)) {
         try {
@@ -40,15 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Website Screenshot Generator</h1>
-        <form method="post" class="mb-4">
+        <form method="get" class="mb-4">
             <div class="mb-3">
                 <label for="url" class="form-label">Enter a URL:</label>
-                <input type="text" name="url" id="url" class="form-control" placeholder="https://example.com" required>
+                <input type="text" name="q" id="url" class="form-control" placeholder="https://example.com" required value="<?php echo htmlspecialchars($_GET['q'] ?? ''); ?>">
             </div>
             <button type="submit" class="btn btn-primary w-100">Generate Screenshot</button>
         </form>
 
-        <?php if (isset($screenshotBase64)): ?>
+        <?php if ($screenshotBase64): ?>
             <div class="alert alert-success" role="alert">
                 Screenshot generated successfully!
             </div>
@@ -56,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="text-center">
                 <img src="<?php echo $screenshotBase64; ?>" alt="Website Screenshot" class="img-fluid mt-3">
             </div>
-        <?php elseif (isset($error)): ?>
+        <?php elseif ($error): ?>
             <div class="alert alert-danger" role="alert">
                 <?php echo $error; ?>
             </div>
